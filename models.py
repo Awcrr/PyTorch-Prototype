@@ -8,23 +8,26 @@ import torchvision.models as models
 import torch.nn.functional as F
 
 def create_model(args):
+    state = None
     # Load a model or create a brand new one
     if args.pretrained:
         print "=> Loading pretrained model from " + args.pretrained  
-        assert os.path.isfile(args.pretrained), "[!] Pretrained model " + args.preatrained + " doesn't exist"
+        assert os.path.isfile(args.pretrained), "[!] Pretrained model " + args.pretrained + " doesn't exist"
         model = torch.load(args.pretrained)
         assert model != None, "[!] Failed to load " + args.pretrained
         # Start from epoch-1
         model.start_epoch = 1
-    elif args.resume:
-        print "=> Loading checkpoints from " + args.resume
-        assert os.path.isfile(args.resume), "[!] Checkpoint " + args.resume + " doesn't exist" 
-        model = torch.load(args.resume)
-        assert model != None, "[!] Failed to load " + args.resume
     else:
         print "=> Creating a " + args.model
         model = globals()[args.model + 'Model'](args)
         model.start_epoch = 1
+
+    if args.resume:
+        print "=> Loading checkpoints from " + args.resume
+        assert os.path.isfile(args.resume), "[!] Checkpoint " + args.resume + " doesn't exist" 
+        checkpoint = torch.load(args.resume)
+        model.load_state_dict(checkpoint['model'])
+        state = checkpoint['state']
 
     if args.nGPU > 0:
         cudnn.benchmark = True
@@ -37,7 +40,7 @@ def create_model(args):
     if args.nGPU > 0:
         criterion = criterion.cuda()
 
-    return model, criterion 
+    return model, criterion, state 
 
 class LeNetModel(nn.Module):
     def __init__(self, args):
