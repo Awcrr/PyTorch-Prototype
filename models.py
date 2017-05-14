@@ -15,12 +15,9 @@ def create_model(args):
         assert os.path.isfile(args.pretrained), "[!] Pretrained model " + args.pretrained + " doesn't exist"
         model = torch.load(args.pretrained)
         assert model != None, "[!] Failed to load " + args.pretrained
-        # Start from epoch-1
-        model.start_epoch = 1
     else:
         print "=> Creating a " + args.model
         model = globals()[args.model + 'Model'](args)
-        model.start_epoch = 1
 
     if args.resume:
         print "=> Loading checkpoints from " + args.resume

@@ -23,14 +23,14 @@ def main():
         test_summary = trainer.test(0, val_loader)
         print "Top1 Error: %6.3f  Top5 Error: %6.3f" % (test_summary[0], test_summary[1])
         # If unnecessary, comment the following line
-        logger.record(test=test_summary)
+        logger.record(0, test=test_summary)
 
     start_epoch = logger.start_epoch
     for epoch in xrange(start_epoch, args.n_epochs + 1):
         train_summary = trainer.train(epoch, train_loader)
         test_summary = trainer.test(epoch, val_loader)
 
-        logger.record(train=train_summary, test=test_summary, epoch=epoch, model=model) 
+        logger.record(epoch, train=train_summary, test=test_summary, model=model) 
 
     logger.final_print()
 
