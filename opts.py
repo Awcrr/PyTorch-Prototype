@@ -19,6 +19,9 @@ parser.add_argument('-workers', default=4, type=int, help='Number of subprocesse
 
 # Training options 
 parser.add_argument('-save_path', default='checkpoints', help='Path to save training record')
+parser.add_argument('-lr', default=0.1, help='Base learning rate of training')
+parser.add_argument('-momentum', default=0.9, help='Momentum for training')
+parser.add_argument('-weight_decay', default=1e-4, help='Weight decay for training')
 
 # Model options
 parser.add_argument('-pretrained', default=None, help='Path to the pretrained model')

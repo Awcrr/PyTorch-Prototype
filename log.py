@@ -18,7 +18,9 @@ class Logger:
         assert train_summary != None or test_summary != None, "Need at least one summary"    
          
         if train_summary:
-            pass
+            train_top1 = train_summary['top1']
+            train_top5 = train_summary['top5']
+            self.state['optim'] = train_summary['optim'] 
 
         if test_summary:
             test_top1 = test_summary['top1']

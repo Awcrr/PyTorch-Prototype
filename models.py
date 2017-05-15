@@ -47,6 +47,7 @@ class LeNetModel(nn.Module):
         self.conv2_drop = nn.Dropout2d()
         self.fc1 = nn.Linear(320, 50)
         self.fc2 = nn.Linear(50, 10)
+        self.is_training = True
 
     def forward(self, x):
         x = F.relu(F.max_pool2d(self.conv1(x), 2))
@@ -56,3 +57,9 @@ class LeNetModel(nn.Module):
         x = F.dropout(x, training=self.training)
         x = self.fc2(x)
         return F.log_softmax(x)
+
+    def train(self):
+        self.is_training = True
+
+    def test(self):
+        self.is_training = False
