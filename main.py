@@ -1,8 +1,8 @@
 from opts import args
 from models import create_model
 from datasets import create_loader
+from log import Logger
 # from train import Trainer
-# from log import Logger
 
 def main():
     # Create Model, Criterion and State
@@ -15,6 +15,9 @@ def main():
     # Create logger
     logger = Logger(args, state)
     print "=> Logger is ready"
+    # DEBUG
+    exit(0)
+    #
     # Create trainer 
     trainer = Trainer(args, model, criterion, logger)
     print "=> Trainer is ready"

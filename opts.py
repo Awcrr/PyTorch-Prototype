@@ -18,6 +18,7 @@ parser.add_argument('-sampler', default=None, help='Strategy to draw examples fr
 parser.add_argument('-workers', default=4, type=int, help='Number of subprocesses to to load data')
 
 # Training options 
+parser.add_argument('-save_path', default='checkpoints', help='Path to save training record')
 
 # Model options
 parser.add_argument('-pretrained', default=None, help='Path to the pretrained model')

@@ -2,4 +2,4 @@
 python main.py \
     -nGPU 2 \
     -data_dir ./data \
-    -dataset MNIST 
+    -dataset MNIST
