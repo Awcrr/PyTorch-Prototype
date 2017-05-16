@@ -61,7 +61,7 @@ class Trainer:
             
             print "| Epoch[%d] [%d/%d]  Time %.3f  Data %.3f  Err %1.4f  top1 %7.3f  top5 %7.3f" % (
                     epoch,
-                    i,
+                    i + 1,
                     n_batches,
                     batch_time,
                     data_time,
@@ -77,7 +77,7 @@ class Trainer:
         top1_avg /= total
         top5_avg /= total
 
-        print "=> Epoch[%d]  Time_avg: %.3f  Data_avg: %.3f  Err_avg: %1.4f  top1: %7.3f  top5: %7.3f" % (
+        print "\n=> Epoch[%d]  Time_avg: %.3f  Data_avg: %.3f  Err_avg: %1.4f  top1: %7.3f  top5: %7.3f\n" % (
                     epoch,
                     batch_time_avg,
                     data_time_avg,
@@ -93,13 +93,13 @@ class Trainer:
         top1_avg = 0
         top5_avg = 0
         total = 0
-        n_batches = len(train_loader)
+        n_batches = len(test_loader)
 
         model = self.model
         model.eval()
         time_check_point = time.time() 
 
-        for i, (input, target) in enumerate(train_loader):
+        for i, (input, target) in enumerate(test_loader):
             data_time = time.time() - time_check_point   
 
             if self.nGPU > 0:
@@ -122,19 +122,21 @@ class Trainer:
 
             print "| Test[%d] [%d/%d]  Time %.3f  Data %.3f  top1 %7.3f  top5 %7.3f" % (
                     epoch,
-                    i,
+                    i + 1,
                     n_batches,
                     batch_time,
                     data_time,
                     top1,
                     top5)
 
+            time_check_point = time.time()
+
         batch_time_avg /= n_batches
         data_time_avg /= n_batches
         top1_avg /= total
         top5_avg /= total
 
-        print "=> Finished epoch[%d]  Top1 %7.3f  Top5 %7.3f\n" % (
+        print "\n=> Finished epoch[%d]  Top1 %7.3f  Top5 %7.3f\n" % (
                 epoch,
                 top1_avg,
                 top5_avg)
