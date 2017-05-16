@@ -159,6 +159,6 @@ class Trainer:
         return res
 
     def learning_rate(self, epoch):
-        lr = self.lr * (0.1 ** ((epoch - 1) // 30))
+        lr = self.lr * (0.1 ** ((epoch - 1) // 10))
         for param_group in self.optimizer.param_groups:
             param_group['lr'] = lr

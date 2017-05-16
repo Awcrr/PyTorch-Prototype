@@ -19,9 +19,10 @@ def main():
 
     if args.test_only:
         test_summary = trainer.test(0, val_loader)
-        print "Top1 Error: %6.3f  Top5 Error: %6.3f" % (test_summary[0], test_summary[1])
+        print "Top1 Error: %6.3f  Top5 Error: %6.3f" % (test_summary['top1'], test_summary['top5'])
         # If unnecessary, comment the following line
-        logger.record(0, test=test_summary)
+        logger.record(0, test_summary=test_summary)
+        return 0 
 
     start_epoch = logger.state['epoch'] + 1
     print "=> Start training"

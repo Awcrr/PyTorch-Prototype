@@ -35,11 +35,11 @@ class Logger:
                 self.state['best_top5'] = test_top5
                 torch.save({
                     'state': self.state,
-                    'model': model.state_dict()
+                    'model': model.state_dict() if model else None
                     }, os.path.join(self.save_path, 'best_model.pth.tar'))
             torch.save({
                 "state": self.state,
-                "model": model.state_dict()
+                "model": model.state_dict() if model else None
                 }, os.path.join(self.save_path, 'model_%d.pth.tar' % epoch))
 
     def final_print(self):
