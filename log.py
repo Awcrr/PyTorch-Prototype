@@ -1,11 +1,12 @@
 import os
+import torch
 
 class Logger:
     def __init__(self, args, state):
         if not state:
             # Initial state
             self.state = {
-                    'epoch': 1,
+                    'epoch': 0,
                     'best_top1': 100,
                     'best_top5': 100,
                     'optim': None}

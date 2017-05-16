@@ -23,17 +23,13 @@ def main():
         # If unnecessary, comment the following line
         logger.record(0, test=test_summary)
 
-    start_epoch = logger.state['epoch']
+    start_epoch = logger.state['epoch'] + 1
     print "=> Start training"
     for epoch in xrange(start_epoch, args.n_epochs + 1):
         train_summary = trainer.train(epoch, train_loader)
         test_summary = trainer.test(epoch, val_loader)
-        # DEBUG
-        print "Done 1 epoch training and testing"
-        exit(0)
-        #
 
-        logger.record(epoch, train=train_summary, test=test_summary, model=model) 
+        logger.record(epoch, train_summary=train_summary, test_summary=test_summary, model=model) 
 
     logger.final_print()
 
