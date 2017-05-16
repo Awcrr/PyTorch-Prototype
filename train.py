@@ -35,6 +35,7 @@ class Trainer:
             data_time = time.time() - time_check_point   
 
             if self.nGPU > 0:
+                # input = input.cuda()
                 target = target.cuda(async=True)
             batch_size = target.size(0)
             input_var = Variable(input)
@@ -64,7 +65,7 @@ class Trainer:
                     n_batches,
                     batch_time,
                     data_time,
-                    loss,
+                    loss.data[0],
                     top1,
                     top5)
 
@@ -95,13 +96,14 @@ class Trainer:
         n_batches = len(train_loader)
 
         model = self.model
-        model.test()
+        model.eval()
         time_check_point = time.time() 
 
         for i, (input, target) in enumerate(train_loader):
             data_time = time.time() - time_check_point   
 
             if self.nGPU > 0:
+                input = input.cuda()
                 target = target.cuda(async=True)
             batch_size = target.size(0)
             input_var = Variable(input)
@@ -150,11 +152,11 @@ class Trainer:
         res = []
         for k in topk:
             correct_k = correct[:k].view(-1).float().sum(0)
-            res.append(correct_k.mul_(100. / batch_size))
+            res.append(correct_k.mul_(100. / batch_size)[0])
 
         return res
 
     def learning_rate(self, epoch):
         lr = self.lr * (0.1 ** ((epoch - 1) // 30))
-        for param_group in optimizer.param_groups:
+        for param_group in self.optimizer.param_groups:
             param_group['lr'] = lr

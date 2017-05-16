@@ -5,6 +5,7 @@ class Logger:
         if not state:
             # Initial state
             self.state = {
+                    'epoch': 1,
                     'best_top1': 100,
                     'best_top5': 100,
                     'optim': None}
@@ -16,6 +17,8 @@ class Logger:
 
     def record(self, epoch, train_summary=None, test_summary=None, model=None):
         assert train_summary != None or test_summary != None, "Need at least one summary"    
+
+        self.state['epoch'] = epoch
          
         if train_summary:
             train_top1 = train_summary['top1']

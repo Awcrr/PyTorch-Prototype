@@ -14,13 +14,8 @@ def main():
     print "=> Dataloaders are ready"
     # Create logger
     logger = Logger(args, state)
-    print "=> Logger is ready"
-    # Create trainer 
     trainer = Trainer(args, model, criterion, logger)
     print "=> Trainer is ready"
-    # DEBUG
-    exit(0)
-    #
 
     if args.test_only:
         test_summary = trainer.test(0, val_loader)
@@ -28,9 +23,14 @@ def main():
         # If unnecessary, comment the following line
         logger.record(0, test=test_summary)
 
-    start_epoch = logger.start_epoch
+    start_epoch = logger.state['epoch']
+    print "=> Start training"
     for epoch in xrange(start_epoch, args.n_epochs + 1):
         train_summary = trainer.train(epoch, train_loader)
+        # DEBUG
+        print "Done 1 epoch training"
+        exit(0)
+        #
         test_summary = trainer.test(epoch, val_loader)
 
         logger.record(epoch, train=train_summary, test=test_summary, model=model) 

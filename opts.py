@@ -16,12 +16,14 @@ parser.add_argument('-batch_size', default=128, type=int, help='Size of mini-bat
 parser.add_argument('-shuffle', default=True, type=bool, help='Reshuffle data at each epoch')
 parser.add_argument('-sampler', default=None, help='Strategy to draw examples from dataset')
 parser.add_argument('-workers', default=4, type=int, help='Number of subprocesses to to load data')
+parser.add_argument('-test_only', default=False, action='store_true', help='Only conduct testing on the validation set')
 
 # Training options 
 parser.add_argument('-save_path', default='checkpoints', help='Path to save training record')
 parser.add_argument('-lr', default=0.1, help='Base learning rate of training')
 parser.add_argument('-momentum', default=0.9, help='Momentum for training')
 parser.add_argument('-weight_decay', default=1e-4, help='Weight decay for training')
+parser.add_argument('-n_epochs', default=90, help='Training epochs')
 
 # Model options
 parser.add_argument('-pretrained', default=None, help='Path to the pretrained model')
