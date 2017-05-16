@@ -7,8 +7,8 @@ class Logger:
             # Initial state
             self.state = {
                     'epoch': 0,
-                    'best_top1': 100,
-                    'best_top5': 100,
+                    'best_top1': 0,
+                    'best_top5': 0,
                     'optim': None}
         else:
             self.state = state
@@ -29,7 +29,7 @@ class Logger:
         if test_summary:
             test_top1 = test_summary['top1']
             test_top5 = test_summary['top5']
-            is_best = test_top1 < self.state['best_top1']
+            is_best = test_top1 > self.state['best_top1']
             if is_best:
                 self.state['best_top1'] = test_top1
                 self.state['best_top5'] = test_top5
