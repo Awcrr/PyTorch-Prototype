@@ -25,6 +25,7 @@ class Logger:
             train_top1 = train_summary['top1']
             train_top5 = train_summary['top5']
             self.state['optim'] = train_summary['optim'] 
+            torch.save({'latest': epoch}, os.path.join(self.save_path, 'latest.pth.tar')) 
 
         if test_summary:
             test_top1 = test_summary['top1']

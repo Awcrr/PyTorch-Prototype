@@ -19,19 +19,23 @@ def create_model(args):
         print "=> Creating a " + args.model
         model = globals()[args.model + 'Model'](args)
 
-    if args.resume:
-        print "=> Loading checkpoints from " + args.resume
-        assert os.path.isfile(args.resume), "[!] Checkpoint " + args.resume + " doesn't exist" 
-        checkpoint = torch.load(args.resume)
-        model.load_state_dict(checkpoint['model'])
-        state = checkpoint['state']
-
     if args.nGPU > 0:
         cudnn.benchmark = True
         if args.nGPU > 1:
             model = nn.DataParallel(model).cuda()
         else:
             model = model.cuda()
+
+    if args.resume:
+        print "=> Loading checkpoints from " + args.resume
+        assert os.path.exists(args.resume), "[!] Checkpoint " + args.resume + " doesn't exist" 
+        # Load the latest checkpoint from a directory
+        if os.path.isdir(args.resume):
+            latest = torch.load(os.path.join(args.resume, 'latest.pth.tar'))['latest']
+            args.resume = os.path.join(args.resume, 'model_%d.pth.tar' % latest)
+        checkpoint = torch.load(args.resume)
+        model.load_state_dict(checkpoint['model'])
+        state = checkpoint['state']
 
     criterion = nn.__dict__[args.criterion + 'Loss']()
     if args.nGPU > 0:
