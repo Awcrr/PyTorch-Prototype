@@ -25,7 +25,7 @@ class Logger:
             train_top1 = train_summary['top1']
             train_top5 = train_summary['top5']
             self.state['optim'] = train_summary['optim'] 
-            torch.save({'latest': epoch}, os.path.join(self.save_path, 'latest.pth.tar')) 
+            torch.save({'latest': epoch}, os.path.join(self.save_path, 'latest.pt')) 
 
         if test_summary:
             test_top1 = test_summary['top1']
@@ -37,11 +37,11 @@ class Logger:
                 torch.save({
                     'state': self.state,
                     'model': model.state_dict() if model else None
-                    }, os.path.join(self.save_path, 'best_model.pth.tar'))
+                    }, os.path.join(self.save_path, 'best_model.pt'))
             torch.save({
                 "state": self.state,
                 "model": model.state_dict() if model else None
-                }, os.path.join(self.save_path, 'model_%d.pth.tar' % epoch))
+                }, os.path.join(self.save_path, 'model_%d.pt' % epoch))
 
     def final_print(self):
         print "- Best Top1: %6.3f Best Top5: %6.3f" % (self.state['best_top1'], self.state['best_top5'])

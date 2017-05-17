@@ -31,8 +31,8 @@ def create_model(args):
         assert os.path.exists(args.resume), "[!] Checkpoint " + args.resume + " doesn't exist" 
         # Load the latest checkpoint from a directory
         if os.path.isdir(args.resume):
-            latest = torch.load(os.path.join(args.resume, 'latest.pth.tar'))['latest']
-            args.resume = os.path.join(args.resume, 'model_%d.pth.tar' % latest)
+            latest = torch.load(os.path.join(args.resume, 'latest.pt'))['latest']
+            args.resume = os.path.join(args.resume, 'model_%d.pt' % latest)
         checkpoint = torch.load(args.resume)
         model.load_state_dict(checkpoint['model'])
         state = checkpoint['state']
