@@ -60,3 +60,10 @@ class LeNetModel(nn.Module):
         x = F.dropout(x, training=self.training)
         x = self.fc2(x)
         return x
+
+class ResNetModel(nn.Module):
+    def __inint__(self, args):
+        pass
+
+    def forward(self, x):
+        pass

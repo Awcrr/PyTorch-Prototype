@@ -23,11 +23,36 @@ class MNISTSet:
         self.train = split == 'train'
         self.transforms = transforms.Compose([
             transforms.ToTensor(),
-            transforms.Normalize((0.1307,), (0.3081,))
+            transforms.Normalize(mean=(0.1307,), std=(0.3081,))
             ])
 
     def getset(self):
         return datasets.MNIST(self.data_dir,
+            train=self.train,
+            transform=self.transforms,
+            download=True)
+
+class CIFAR100Set:
+    def __init__(self, args, split):
+        self.data_dir = args.data_dir
+        self.train = split == 'train'
+        normalize = transforms.Normalize(mean=[x / 255. for x in [125.3, 123.0, 113.9]],
+                                        std=[x / 255. for x in [63.0, 62.1, 66.7]])
+        if self.train:
+            self.transforms = transforms.Compose([
+                transforms.RandomCrop(32, padding=4),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                normalize
+                ])
+        else:
+            self.transforms = transforms.Compose([
+                transforms.ToTensor(),
+                normalize
+                ])
+
+    def getset(self):
+        return datasets.CIFAR100(self.data_dir,
             train=self.train,
             transform=self.transforms,
             download=True)

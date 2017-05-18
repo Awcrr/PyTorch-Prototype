@@ -12,6 +12,9 @@ def main():
     train_loader = create_loader(args, 'train')
     val_loader = create_loader(args, 'val')
     print "=> Dataloaders are ready"
+    # DEBUG
+    exit(0)
+    #
     # Create logger
     logger = Logger(args, state)
     trainer = Trainer(args, model, criterion, logger)
