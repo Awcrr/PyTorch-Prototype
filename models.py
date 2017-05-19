@@ -1,6 +1,7 @@
 import os
 
 import torch
+import torcn.nn.init
 import torch.nn as nn
 import torch.nn.parallel
 import torch.backends.cudnn as cudnn
@@ -52,6 +53,8 @@ class LeNetModel(nn.Module):
         self.fc1 = nn.Linear(320, 50)
         self.fc2 = nn.Linear(50, 10)
 
+        self._initialize_weights()
+
     def forward(self, x):
         x = F.relu(F.max_pool2d(self.conv1(x), 2))
         x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x)), 2))
@@ -61,7 +64,18 @@ class LeNetModel(nn.Module):
         x = self.fc2(x)
         return x
 
-class ResNetModel(nn.Module):
+    def _initialize_weights(self):
+        for unit in self.modules():
+            if isinstance(unit, nn.Conv2d):
+                nn.init.kaiming_uniform(unit.weight, mode='fan_out')    
+            elif isinstance(unit, nn.BatchNorm2d):
+                nn.init.constant(unit.weight, 1)
+                nn.init.constant(unit.bias, 0)
+            elif isinstance(unit, nn.Linear):
+                nn.init.normal(unit.weight, mean=0, std=0.01)
+                nn.init.constant(unit.bias, 0)
+
+class VGG16Model(nn.Module):
     def __inint__(self, args):
         pass
 

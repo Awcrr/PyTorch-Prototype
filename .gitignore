@@ -4,3 +4,4 @@
 data/
 checkpoints/
 cluster_run.sh
+srun.sh
