@@ -17,6 +17,7 @@ parser.add_argument('-shuffle', default=True, type=bool, help='Reshuffle data at
 parser.add_argument('-sampler', default=None, help='Strategy to draw examples from dataset')
 parser.add_argument('-workers', default=4, type=int, help='Number of subprocesses to to load data')
 parser.add_argument('-test_only', default=False, action='store_true', help='Only conduct testing on the validation set')
+parser.add_argument('-training_record', default=None, help='Path to save training record, default format [[train_top1, train_top5, train_loss, val_top1, val_top5]]')
 
 # Training options 
 parser.add_argument('-save_path', default='checkpoints', help='Path to save training record')

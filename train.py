@@ -85,7 +85,7 @@ class Trainer:
                     top1_avg,
                     top5_avg) 
 
-        return {'top1': top1_avg, 'top5': top5_avg, 'optim': self.optimizer.state_dict()}
+        return {'top1': top1_avg, 'top5': top5_avg, 'optim': self.optimizer.state_dict(), 'loss': loss_avg}
         
     def test(self, epoch, test_loader):
         batch_time_avg = 0
@@ -159,6 +159,8 @@ class Trainer:
         return res
 
     def learning_rate(self, epoch):
-        lr = self.lr * (0.1 ** ((epoch - 1) // 6))
+        # lr = self.lr * (0.1 ** ((epoch - 1) // 6)) # This strategy is for MNIST
+        lr = 2 if epoch > 120 else 1 if epoch > 80 else 0
+        lr = self.lr * (0.1 ** lr)
         for param_group in self.optimizer.param_groups:
             param_group['lr'] = lr

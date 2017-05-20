@@ -6,4 +6,5 @@ python main.py \
     -save_path checkpoints \
     -model VGG16 \
     -batch_size 256 \
-    -n_epochs 18 
+    -training_record record.npy \
+    -n_epochs 150 
