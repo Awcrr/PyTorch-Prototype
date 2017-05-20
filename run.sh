@@ -5,4 +5,5 @@ python main.py \
     -dataset CIFAR100 \
     -save_path checkpoints \
     -model VGG16 \
+    -batch_size 256 \
     -n_epochs 18 

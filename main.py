@@ -8,9 +8,6 @@ def main():
     # Create Model, Criterion and State
     model, criterion, state = create_model(args)
     print "=> Model and criterion are ready"
-    # DEBUG
-    exit(0)
-    #
     # Create Dataloader
     train_loader = create_loader(args, 'train')
     val_loader = create_loader(args, 'val')

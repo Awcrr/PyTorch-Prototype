@@ -92,7 +92,7 @@ class VGG16Model(nn.Module):
 
     def forward(self, x):
         x = self.feature(x)
-        x = self.view(x.size(0), -1)
+        x = x.view(x.size(0), -1)
         predictions = self.classifier(x)
 
         return predictions
@@ -107,7 +107,7 @@ class VGG16Model(nn.Module):
                 feature_layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
             else:
                 feature_layers += [
-                nn.Conv2d(iChannels, layer, kernel_size=2, padding=1),
+                nn.Conv2d(iChannels, layer, kernel_size=3, padding=1),
                 nn.BatchNorm2d(layer),
                 nn.ReLU(True)]
                 iChannels = layer
