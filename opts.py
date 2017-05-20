@@ -31,5 +31,6 @@ parser.add_argument('-resume', default=None, help='Path to resume training from 
 parser.add_argument('-model', default='LeNet', choices=model_choices, help='Model type when we create a new one')
 parser.add_argument('-nGPU', default=1, type=int, help='Number of GPUs for training')
 parser.add_argument('-criterion', default='CrossEntropy', help='Type of objective function')
+parser.add_argument('-num_classes', default=100, type=int, help='Num of classes in the classfication task')
 
 args = parser.parse_args()

@@ -1,7 +1,7 @@
 import os
 
 import torch
-import torcn.nn.init
+import torch.nn.init
 import torch.nn as nn
 import torch.nn.parallel
 import torch.backends.cudnn as cudnn
@@ -76,8 +76,51 @@ class LeNetModel(nn.Module):
                 nn.init.constant(unit.bias, 0)
 
 class VGG16Model(nn.Module):
-    def __inint__(self, args):
-        pass
+    def __init__(self, args):
+        super(VGG16Model, self).__init__()
+        self.feature = self._construct_features(args)
+        self.classifier = nn.Sequential(
+            nn.Linear(512, 512),
+            nn.ReLU(True),
+            nn.Dropout(),
+            nn.Linear(512, 512),
+            nn.ReLU(True),
+            nn.Dropout(),
+            nn.Linear(512, args.num_classes))
+
+        self._initialize_weights()
 
     def forward(self, x):
-        pass
+        x = self.feature(x)
+        x = self.view(x.size(0), -1)
+        predictions = self.classifier(x)
+
+        return predictions
+
+    def _construct_features(self, args):
+        layers = [64, 64, 'M', 128, 128, 'M', 256, 256, 256, 'M', 512, 512, 512, 'M', 512, 512, 512, 'M']
+        iChannels = 3
+        feature_layers = []
+      
+        for layer in layers:
+            if layer == 'M':
+                feature_layers += [nn.MaxPool2d(kernel_size=2, stride=2)]
+            else:
+                feature_layers += [
+                nn.Conv2d(iChannels, layer, kernel_size=2, padding=1),
+                nn.BatchNorm2d(layer),
+                nn.ReLU(True)]
+                iChannels = layer
+
+        return nn.Sequential(*feature_layers)
+
+    def _initialize_weights(self):
+        for unit in self.modules():
+            if isinstance(unit, nn.Conv2d):
+                nn.init.kaiming_uniform(unit.weight, mode='fan_out')    
+            elif isinstance(unit, nn.BatchNorm2d):
+                nn.init.constant(unit.weight, 1)
+                nn.init.constant(unit.bias, 0)
+            elif isinstance(unit, nn.Linear):
+                nn.init.normal(unit.weight, mean=0, std=0.01)
+                nn.init.constant(unit.bias, 0)
