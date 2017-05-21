@@ -27,6 +27,7 @@ def create_model(args):
         else:
             model = model.cuda()
 
+    # If resume, load all the states to the current model
     if args.resume:
         print "=> Loading checkpoints from " + args.resume
         assert os.path.exists(args.resume), "[!] Checkpoint " + args.resume + " doesn't exist" 

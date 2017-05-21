@@ -1,3 +1,5 @@
+import os
+
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import Sampler
 from torchvision import datasets, transforms
@@ -56,3 +58,29 @@ class CIFAR100Set:
             train=self.train,
             transform=self.transforms,
             download=True)
+
+class ImageNetSet:
+    def __init__(self, args, split):
+        self.data_dir = os.path.join(args.data_dir, 'train')
+        self.train = split == 'train'
+        normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                                        std=[0.229, 0.224, 0.225]) 
+
+        if self.train:
+            self.transforms = transforms.Compose([
+                transforms.RandomCrop(224),
+                transforms.RandomHorizontalFlip(),
+                transforms.ToTensor(),
+                normalize
+                ])
+        else:
+            self.transforms = transforms.Compose([
+                transforms.Scale(256),
+                transforms.CenterCrop(224),
+                transforms.ToTensor(),
+                normalize
+                ])
+
+    def getset(self):
+        return datasets.ImageFolder(root=self.data_dir,
+                transform=self.transforms) 

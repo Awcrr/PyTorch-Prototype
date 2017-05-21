@@ -2,7 +2,7 @@
 python main.py \
     -nGPU 4 \
     -data_dir data \
-    -dataset CIFAR100 \
+    -dataset ImageNet \
     -save_path checkpoints \
     -model VGG16 \
     -batch_size 256 \
