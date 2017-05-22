@@ -4,7 +4,8 @@ python main.py \
     -data_dir data \
     -dataset ImageNet \
     -save_path checkpoints \
-    -model VGG16 \
-    -batch_size 256 \
+    -model VGG19 \
+    -batch_size 96 \
     -training_record record.npy \
+    -num_classes 1000 \
     -n_epochs 150 

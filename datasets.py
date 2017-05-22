@@ -68,7 +68,7 @@ class ImageNetSet:
 
         if self.train:
             self.transforms = transforms.Compose([
-                transforms.RandomCrop(224),
+                transforms.RandomSizedCrop(224),
                 transforms.RandomHorizontalFlip(),
                 transforms.ToTensor(),
                 normalize
