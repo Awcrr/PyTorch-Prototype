@@ -32,7 +32,7 @@ class Logger:
             train_top5 = train_summary['top5']
             train_loss = train_summary['loss']
             self.state['optim'] = train_summary['optim'] 
-            torch.save({'latest': epoch}, os.path.join(self.save_path, 'latest.pt')) 
+            torch.save({'latest': epoch}, os.path.join(self.save_path, 'latest.pth')) 
 
         if test_summary:
             test_top1 = test_summary['top1']
@@ -44,11 +44,11 @@ class Logger:
                 torch.save({
                     'state': self.state,
                     'model': model.state_dict() if model else None
-                    }, os.path.join(self.save_path, 'best_model.pt'))
+                    }, os.path.join(self.save_path, 'best_model.pth'))
             torch.save({
                 "state": self.state,
                 "model": model.state_dict() if model else None
-                }, os.path.join(self.save_path, 'model_%d.pt' % epoch))
+                }, os.path.join(self.save_path, 'model_%d.pth' % epoch))
 
         if self.record_file:
             self.training_record.append([train_top1, train_top5, train_loss, test_top1, test_top5])
