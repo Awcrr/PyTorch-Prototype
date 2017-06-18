@@ -61,7 +61,7 @@ class CIFAR100Set:
 
 class ImageNetSet:
     def __init__(self, args, split):
-        self.data_dir = os.path.join(args.data_dir, 'train')
+        self.data_dir = os.path.join(args.data_dir, split)
         self.train = split == 'train'
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                         std=[0.229, 0.224, 0.225]) 
