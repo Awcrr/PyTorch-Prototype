@@ -20,13 +20,6 @@ def create_model(args):
         print "=> Creating a " + args.model
         model = globals()[args.model + 'Model'](args)
 
-    if args.nGPU > 0:
-        cudnn.benchmark = True
-        if args.nGPU > 1:
-            model = nn.DataParallel(model).cuda()
-        else:
-            model = model.cuda()
-
     # If resume, load all the states to the current model
     if args.resume:
         print "=> Loading checkpoints from " + args.resume
@@ -38,6 +31,13 @@ def create_model(args):
         checkpoint = torch.load(args.resume)
         model.load_state_dict(checkpoint['model'])
         state = checkpoint['state']
+
+    if args.nGPU > 0:
+        cudnn.benchmark = True
+        if args.nGPU > 1:
+            model = nn.DataParallel(model).cuda()
+        else:
+            model = model.cuda()
 
     criterion = nn.__dict__[args.criterion + 'Loss']()
     if args.nGPU > 0:

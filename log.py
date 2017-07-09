@@ -25,6 +25,9 @@ class Logger:
     def record(self, epoch, train_summary=None, test_summary=None, model=None):
         assert train_summary != None or test_summary != None, "Need at least one summary"    
 
+        if torch.typename(model).find('DataParallel') != -1:
+            model = model.module
+
         self.state['epoch'] = epoch
          
         if train_summary:
