@@ -9,7 +9,8 @@ def main():
     model, criterion, state = create_model(args)
     print "=> Model and criterion are ready"
     # Create Dataloader
-    train_loader = create_loader(args, 'train')
+    if not args.test_only:
+        train_loader = create_loader(args, 'train')
     val_loader = create_loader(args, 'val')
     print "=> Dataloaders are ready"
     # Create Logger
