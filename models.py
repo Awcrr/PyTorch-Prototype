@@ -35,7 +35,7 @@ def create_model(args):
     if args.nGPU > 0:
         cudnn.benchmark = True
         if args.nGPU > 1:
-            model = nn.DataParallel(model).cuda()
+            model = nn.DataParallel(model, device_ids=[i for i in xrange(args.nGPU)]).cuda()
         else:
             model = model.cuda()
 
