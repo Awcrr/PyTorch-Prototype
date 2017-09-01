@@ -19,7 +19,7 @@ def create_loader(args, split):
             num_workers=args.workers,
             pin_memory=True)
 
-class MNISTSet:
+class MNISTSet(object):
     def __init__(self, args, split): 
         self.data_dir = args.data_dir 
         self.train = split == 'train'
@@ -34,7 +34,7 @@ class MNISTSet:
             transform=self.transforms,
             download=True)
 
-class CIFAR100Set:
+class CIFAR100Set(object):
     def __init__(self, args, split):
         self.data_dir = args.data_dir
         self.train = split == 'train'
@@ -59,7 +59,7 @@ class CIFAR100Set:
             transform=self.transforms,
             download=True)
 
-class ImageNetSet:
+class ImageNetSet(object):
     def __init__(self, args, split):
         self.data_dir = os.path.join(args.data_dir, split)
         self.train = split == 'train'

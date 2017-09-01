@@ -79,7 +79,7 @@ class LeNetModel(nn.Module):
 class VGG16Model(nn.Module):
     def __init__(self, args):
         super(VGG16Model, self).__init__()
-        self.feature = self._construct_features(args)
+        self.features = self._construct_features(args)
         self.classifier = nn.Sequential(
             nn.Linear(512, 512),
             nn.ReLU(True),
@@ -92,7 +92,7 @@ class VGG16Model(nn.Module):
         self._initialize_weights()
 
     def forward(self, x):
-        x = self.feature(x)
+        x = self.features(x)
         x = x.view(x.size(0), -1)
         predictions = self.classifier(x)
 
@@ -129,7 +129,7 @@ class VGG16Model(nn.Module):
 class VGG19Model(nn.Module):
     def __init__(self, args):
         super(VGG19Model, self).__init__()
-        self.feature = self._construct_features(args)
+        self.features = self._construct_features(args)
         self.classifier = nn.Sequential(
             nn.Linear(512 * 7 * 7, 4096),
             nn.ReLU(True),
@@ -142,7 +142,7 @@ class VGG19Model(nn.Module):
         self._initialize_weights()
 
     def forward(self, x):
-        x = self.feature(x)
+        x = self.features(x)
         x = x.view(x.size(0), -1)
         predictions = self.classifier(x)
 
