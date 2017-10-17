@@ -13,7 +13,7 @@ model_choices = sorted(name[:-5] for name in models.__dict__
 parser.add_argument('-data_dir', required=True, help='Path to data directory')
 parser.add_argument('-dataset', required=True, choices=dataset_choices)
 parser.add_argument('-batch_size', default=128, type=int, help='Size of mini-batches for each iteration')
-parser.add_argument('-shuffle', default=True, type=bool, help='Reshuffle data at each epoch')
+parser.add_argument('-shuffle', default=True, action='store_false', help='Reshuffle data at each epoch')
 parser.add_argument('-sampler', default=None, help='Strategy to draw examples from dataset')
 parser.add_argument('-workers', default=4, type=int, help='Number of subprocesses to to load data')
 parser.add_argument('-test_only', default=False, action='store_true', help='Only conduct testing on the validation set')
