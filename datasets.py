@@ -75,7 +75,7 @@ class ImageNetSet(object):
                 ])
         else:
             self.transforms = transforms.Compose([
-                transforms.Scale(256),
+                transforms.Resize(256),
                 transforms.CenterCrop(224),
                 transforms.ToTensor(),
                 normalize
