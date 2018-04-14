@@ -125,3 +125,6 @@ run
 .DS_Store
 ._.DS_Store
 ._*
+
+# GProf output
+gmon.out
